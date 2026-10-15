@@ -1,0 +1,761 @@
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{amssymb}
+
+\setlist[itemize]{label=-}
+\setcounter{secnumdepth}{0}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=Python,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1 {π}{{$\pi$}}1 {²}{{$^2$}}1 {³}{{$^3$}}1 {¿}{{?`}}1
+}
+\lstset{style=pythonstyle}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Actividad 2 - POO},
+}
+
+% Comando auxiliar para dibujar un cuadro de clase estilo UML
+\newcommand{\clasebox}[3]{%
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\textbf{#1} \\
+\hline
+#2
+\hline
+#3
+\hline
+\end{tabular}
+\end{center}
+}
+
+\begin{document}
+
+% ---------------------------------------------------------
+% PORTADA
+% ---------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\huge \textbf{Universidad Nacional de Colombia}\par}
+    \vspace{0.5cm}
+    {\Large Facultad de Minas\par}
+    \vspace{1.5cm}
+
+    {\Large \textbf{Programación Orientada a Objetos 2026-2}\par}
+    \vspace{2cm}
+
+    {\huge \textbf{Actividad 2}\par}
+    \vspace{0.5cm}
+    {\large Seguimiento y solución de ejercicios prácticos de Programación Orientada a Objetos\par}
+
+    \vspace{3cm}
+
+    \textbf{Presentado por:}\par
+    \vspace{0.5cm}
+    {\Large \textbf{Natalia Patricia Remolina Rodríguez}\par}
+
+    \vspace{2cm}
+
+    \textbf{Docente:}\par
+    Walter Hugo Arboleda Mazo\par
+
+    \vspace{2cm}
+
+    Medellín, Colombia\par
+    8 de octubre de 2026
+\end{titlepage}
+
+% ---------------------------------------------------------
+% EJERCICIO 2.1
+% ---------------------------------------------------------
+\section{Ejercicio 2.1}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%202/ejercicio1.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+class Persona:
+    def __init__(self, nombre, apellido, numero_documento, año_nacimiento):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.numero_documento = numero_documento
+        self.año_nacimiento = año_nacimiento
+
+    def mostrar_datos_personales(self):
+        print(f"Nombre = {self.nombre}")
+        print(f"Apellido = {self.apellido}")
+        print(f"Número de documento de identidad = {self.numero_documento}")
+        print(f"Año de nacimiento = {self.año_nacimiento}")
+
+nombre = input("Ingrese el nombre: ")
+apellido = input("Ingrese el apellido: ")
+numero_documento = input("Ingrese el número de documento de identidad: ")
+año_nacimiento = int(input("Ingrese el año de nacimiento: "))
+
+persona1 = Persona(nombre, apellido, numero_documento, año_nacimiento)
+persona1.mostrar_datos_personales()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Persona}
+{%
+- nombre \\
+- apellido \\
+- numero\_documento \\
+- año\_nacimiento \\
+}
+{%
++ mostrar\_datos\_personales() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 2.2
+% ---------------------------------------------------------
+\section{Ejercicio 2.2}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%202/ejercicio2.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+from enum import Enum
+
+class TipoPlaneta(Enum):
+    GASEOSO = "GASEOSO"
+    TERRESTRE = "TERRESTRE"
+    ENANO = "ENANO"
+
+class Planeta:
+    def __init__(self, nombre, cantidad_satelites, masa, volumen, diametro, distancia_sol, tipo, es_observable):
+        self.nombre = nombre
+        self.cantidad_satelites = cantidad_satelites
+        self.masa = masa
+        self.volumen = volumen
+        self.diametro = diametro
+        self.distancia_sol = distancia_sol
+        self.tipo = tipo
+        self.es_observable = es_observable
+
+    def imprimir(self):
+        print(f"Nombre del planeta = {self.nombre}")
+        print(f"Cantidad de satélites = {self.cantidad_satelites}")
+        print(f"Masa del planeta = {self.masa}")
+        print(f"Volumen del planeta = {self.volumen}")
+        print(f"Diámetro del planeta = {self.diametro}")
+        print(f"Distancia al sol = {self.distancia_sol}")
+        print(f"Tipo de planeta = {self.tipo.name}")
+        print(f"Es observable = {self.es_observable}")
+
+    def calcular_densidad(self):
+        # Evita división por cero
+        return self.masa / self.volumen if self.volumen != 0 else 0
+
+    def es_planeta_exterior(self):
+        # 149597870 * 3.4
+        limite = 508632758.0
+        return self.distancia_sol > limite
+
+
+print("Ingrese el nombre : ")
+nombre = input()
+print("Ingrese cantidad de satélites : ")
+cantidad_satelites = int(input())
+print("Ingrese la masa : ")
+masa = float(input())
+print("Ingrese el volumen : ")
+volumen = float(input())
+
+print("Ingrese el diámetro : ")
+diametro = int(input())
+print("Ingrese la distancia al sol : ")
+distancia_sol = float(input())
+p1 = Planeta(nombre, cantidad_satelites, masa, volumen, diametro,
+             distancia_sol, TipoPlaneta.TERRESTRE, True)
+print("********************************")
+p1.imprimir()
+print(f"Densidad del planeta = {p1.calcular_densidad()}")
+print(f"Es planeta exterior = {p1.es_planeta_exterior()}")
+print("********************************")
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Planeta}
+{%
+- nombre \\
+- cantidad\_satelites \\
+- masa \\
+- volumen \\
+- diametro \\
+- distancia\_sol \\
+- tipo \\
+- es\_observable \\
+}
+{%
++ imprimir() \\
++ calcular\_densidad() \\
++ es\_planeta\_exterior() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 2.3
+% ---------------------------------------------------------
+\section{Ejercicio 2.3}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%202/ejercicio3.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+class Automovil:
+    def __init__(self, marca, modelo, motor, tipo_combustible, tipo_automovil, color, velocidad_maxima, numero_puertas, numero_asientos):
+        self.marca = marca
+        self.modelo = modelo
+        self.motor = motor
+        self.velocidad_maxima = velocidad_maxima
+        self.numero_puertas = numero_puertas
+        self.numero_asientos = numero_asientos
+
+        self.tipo_combustible = tipo_combustible
+        self.tipo_automovil = tipo_automovil
+        self.color = color
+
+        self._velocidad_actual = 0
+
+    @property
+    def tipo_combustible(self):
+        return self._tipo_combustible
+
+    @tipo_combustible.setter
+    def tipo_combustible(self, valor):
+        self._tipo_combustible = valor
+
+    @property
+    def tipo_automovil(self):
+        return self._tipo_automovil
+
+    @tipo_automovil.setter
+    def tipo_automovil(self, valor):
+        self._tipo_automovil = valor
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, valor):
+        self._color = valor
+
+    @property
+    def velocidad_actual(self):
+        return self._velocidad_actual
+
+    def acelerar(self, incremento):
+        if incremento < 0:
+            print("Error: valor no valido")
+            return
+
+        if self._velocidad_actual + incremento <= self.velocidad_maxima:
+            self._velocidad_actual += incremento
+        else:
+            self._velocidad_actual = self.velocidad_maxima
+            print(f"Se ha alcanzado la velocidad máxima de {self.velocidad_maxima}")
+
+        print(f"La velocidad actual es {self._velocidad_actual} km/h")
+
+    def desacelerar(self, decremento):
+        if decremento < 0:
+            print("Error: valor no valido")
+            return
+
+        if self._velocidad_actual - decremento >= 0:
+            self._velocidad_actual -= decremento
+        else:
+            self._velocidad_actual = 0
+            print("El automóvil se ha detenido por completo.")
+
+        print(f"Velocidad actual: {self._velocidad_actual} km/h")
+
+    def frenar(self):
+        self._velocidad_actual = 0
+        print("Freno activado. Velocidad: 0 km/h")
+
+    def tiempo_de_llegada(self, distancia):
+        if self._velocidad_actual == 0:
+            print("No se puede calcular el tiempo de llegada porque el automovil esta detenido.")
+            return None
+
+        return distancia / self._velocidad_actual
+
+    def mostrar_atributos(self):
+        print("\n--- ESPECIFICACIONES DEL VEHÍCULO ---")
+        print(f"Marca: {self.marca} | Modelo: {self.modelo}")
+        print(f"Motor: {self.motor}L | Velocidad Máx: {self.velocidad_maxima} km/h")
+        print(f"Combustible: {self.tipo_combustible.title()}")
+        print(f"Tipo de Auto: {self.tipo_automovil.title()}")
+        print(f"Color: {self.color.title()}")
+        print(f"Puertas: {self.numero_puertas} | Asientos: {self.numero_asientos}")
+        print(f"ESTADO ACTUAL: {self._velocidad_actual} km/h")
+
+def main():
+    print("CONFIGURACIÓN DE AUTOMÓVIL\n")
+
+    marca = input("Marca: ")
+    modelo = input("Modelo (Año): ")
+    motor = float(input("Motor (Litros): "))
+    velocidad_maxima = float(input("Velocidad Máxima: "))
+    numero_puertas = int(input("Puertas: "))
+    numero_asientos = int(input("Asientos: "))
+
+    while True:
+        print("\n--- TIPO DE COMBUSTIBLE ---")
+        print("1. Gasolina\n2. Bioetanol\n3. Diésel\n4. Biodiésel\n5. Gas Natural")
+        opcion_combustible = input("Seleccione (1-5): ")
+        if opcion_combustible == "1":
+            tipo_combustible_seleccionado = "Gasolina"; break
+        elif opcion_combustible == "2":
+            tipo_combustible_seleccionado = "Bioetanol"; break
+        elif opcion_combustible == "3":
+            tipo_combustible_seleccionado = "Diésel"; break
+        elif opcion_combustible == "4":
+            tipo_combustible_seleccionado = "Biodiésel"; break
+        elif opcion_combustible == "5":
+            tipo_combustible_seleccionado = "Gas Natural"; break
+        else:
+            print("Opción inválida.")
+
+    while True:
+        print("\n--- TIPO DE AUTO ---")
+        print("1. Ciudad\n2. Subcompacto\n3. Compacto\n4. Familiar\n5. Ejecutivo\n6. SUV")
+        opcion_tipo = input("Seleccione (1-6): ")
+        if opcion_tipo == "1":
+            tipo_automovil_seleccionado = "Carro de ciudad"; break
+        elif opcion_tipo == "2":
+            tipo_automovil_seleccionado = "Subcompacto"; break
+        elif opcion_tipo == "3":
+            tipo_automovil_seleccionado = "Compacto"; break
+        elif opcion_tipo == "4":
+            tipo_automovil_seleccionado = "Familiar"; break
+        elif opcion_tipo == "5":
+            tipo_automovil_seleccionado = "Ejecutivo"; break
+        elif opcion_tipo == "6":
+            tipo_automovil_seleccionado = "SUV"; break
+        else:
+            print("Opción inválida.")
+
+    while True:
+        print("\n--- COLOR ---")
+        print("1. Blanco\n2. Negro\n3. Rojo\n4. Naranja\n5. Amarillo\n6. Verde\n7. Azul\n8. Violeta")
+        opcion_color = input("Seleccione (1-8): ")
+        if opcion_color == "1":
+            color_seleccionado = "Blanco"; break
+        elif opcion_color == "2":
+            color_seleccionado = "Negro"; break
+        elif opcion_color == "3":
+            color_seleccionado = "Rojo"; break
+        elif opcion_color == "4":
+            color_seleccionado = "Naranja"; break
+        elif opcion_color == "5":
+            color_seleccionado = "Amarillo"; break
+        elif opcion_color == "6":
+            color_seleccionado = "Verde"; break
+        elif opcion_color == "7":
+            color_seleccionado = "Azul"; break
+        elif opcion_color == "8":
+            color_seleccionado = "Violeta"; break
+        else:
+            print("Opción inválida.")
+
+    mi_auto = Automovil(
+        marca,
+        modelo,
+        motor,
+        tipo_combustible_seleccionado,
+        tipo_automovil_seleccionado,
+        color_seleccionado,
+        velocidad_maxima,
+        numero_puertas,
+        numero_asientos
+    )
+
+    while True:
+        print("\n--- MENÚ DE CONDUCCIÓN ---")
+        print("1. Acelerar")
+        print("2. Desacelerar")
+        print("3. Frenar")
+        print("4. Calcular tiempo de llegada")
+        print("5. Ver Ficha Técnica (Atributos)")
+        print("6. Salir del programa")
+
+        opcion_menu = input("\nElija una opción: ")
+
+        if opcion_menu == "1":
+            cantidad_acelerar = float(input("¿Cuánto desea acelerar? (km/h): "))
+            mi_auto.acelerar(cantidad_acelerar)
+
+        elif opcion_menu == "2":
+            cantidad_desacelerar = float(input("¿Cuánto desea desacelerar? (km/h): "))
+            mi_auto.desacelerar(cantidad_desacelerar)
+
+        elif opcion_menu == "3":
+            mi_auto.frenar()
+
+        elif opcion_menu == "4":
+            distancia_viaje = float(input("Distancia a recorrer (km): "))
+            tiempo_resultado = mi_auto.tiempo_de_llegada(distancia_viaje)
+            if tiempo_resultado is not None:
+                print(f"Tiempo estimado: {tiempo_resultado:.2f} horas.")
+
+        elif opcion_menu == "5":
+            mi_auto.mostrar_atributos()
+
+        elif opcion_menu == "6":
+            print("Saliendo del sistema")
+            break
+
+        else:
+            print("Opción no válida.")
+
+
+main()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Automovil}
+{%
+- marca \\
+- modelo \\
+- motor \\
+- tipo\_combustible \\
+- tipo\_automovil \\
+- color \\
+- velocidad\_maxima \\
+- numero\_puertas \\
+- numero\_asientos \\
+- velocidad\_actual \\
+}
+{%
++ acelerar() \\
++ desacelerar() \\
++ frenar() \\
++ tiempo\_de\_llegada() \\
++ mostrar\_atributos() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 2.4
+% ---------------------------------------------------------
+\section{Ejercicio 2.4}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%202/ejercicio4.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import math
+
+
+class Circulo:
+    def __init__(self, radio_circulo):
+        self.radio = radio_circulo
+        self.area = 0
+        self.perimetro = 0
+
+    def calcular_area(self):
+        self.area = math.pi * math.pow(self.radio, 2)
+        return self.area
+
+    def calcular_perimetro(self):
+        self.perimetro = 2 * math.pi * self.radio
+        return self.perimetro
+
+class Rectangulo:
+    def __init__(self, base_rectangulo, altura_rectangulo):
+        self.base = base_rectangulo
+        self.altura = altura_rectangulo
+        self.area = 0
+        self.perimetro = 0
+
+    def calcular_area(self):
+        self.area = self.base * self.altura
+        return self.area
+
+    def calcular_perimetro(self):
+        self.perimetro = (2 * self.base) + (2 * self.altura)
+        return self.perimetro
+
+
+class Cuadrado:
+    def __init__(self, lado_cuadrado):
+        self.lado = lado_cuadrado
+        self.area = 0
+        self.perimetro = 0
+
+    def calcular_area(self):
+        self.area = math.pow(self.lado, 2)
+        return self.area
+
+    def calcular_perimetro(self):
+        self.perimetro = 4 * self.lado
+        return self.perimetro
+
+class Triangulo:
+    def __init__(self, base_triangulo, altura_triangulo):
+        self.base = base_triangulo
+        self.altura = altura_triangulo
+        self.area = 0
+        self.hipotenusa = 0
+        self.perimetro = 0
+
+    def calcular_area(self):
+        self.area = (self.base * self.altura)/2
+        return self.area
+
+    def calcular_hipotenusa(self):
+        self.hipotenusa = math.sqrt(math.pow(self.base, 2) + math.pow(self.altura, 2))
+        return self.hipotenusa
+
+    def calcular_perimetro(self):
+        self.perimetro = self.base + self.altura + self.calcular_hipotenusa()
+        return self.perimetro
+
+    def tipo_triangulo(self):
+        # Aseguramos que la hipotenusa esté calculada antes de compararla
+        self.calcular_hipotenusa()
+        if self.base == self.altura and self.altura == self.hipotenusa:
+            return "El triángulo es Equilátero"
+        elif self.base == self.altura:
+            return "El Triángulo es Isósceles"
+        else:
+            return "El Triángulo es Escaleno"
+
+
+def main():
+    print("--- datos del circulo ---")
+    radio_circulo = float(input("Ingrese el radio del circulo en cm: \n"))
+    valor_circulo = Circulo(radio_circulo)
+
+    print("--- Datos Rectangulo ---")
+    base_rectangulo = float(input("Ingrese la Base del Rectangulo: \n"))
+    altura_rectangulo = float(input("Ingrese la Altura del Rectangulo: \n"))
+    valores_rectangulo = Rectangulo(base_rectangulo, altura_rectangulo)
+
+    print("--- Datos Cuadrado ---")
+    lado_cuadrado = float(input("Ingrese el Lado del Cuadrado: \n"))
+    valores_cuadrado = Cuadrado(lado_cuadrado)
+
+    print("--- datos Triangulo Rectangulo ---")
+    base_triangulo = float(input("Ingrese la Base del Triangulo Rectangulo: \n"))
+    altura_triangulo = float(input("Ingrese la Altura del Triangulo Rectangulo: \n"))
+    valores_triangulo = Triangulo(base_triangulo, altura_triangulo)
+
+    print("--- Resultados de los calculos ---")
+    print("--- Círculo ---")
+    print(f"Area {valor_circulo.calcular_area():.2f} cm2")
+    print(f"Perimetro {valor_circulo.calcular_perimetro():.2f} cm")
+
+    print("--- Rectangulo ---")
+    print(f"Area {valores_rectangulo.calcular_area():.2f} cm2")
+    print(f"Perimetro {valores_rectangulo.calcular_perimetro():.2f} cm")
+
+    print("--- Cuadrado ---")
+    print(f"Area {valores_cuadrado.calcular_area():.2f} cm2")
+    print(f"Perimetro {valores_cuadrado.calcular_perimetro():.2f} cm")
+
+    print("--- Triángulo Rectangulo ---")
+    print(f"Area {valores_triangulo.calcular_area():.2f} cm2")
+    print(f"Perimetro {valores_triangulo.calcular_perimetro():.2f} cm")
+    print(f"Hipotenusa {valores_triangulo.calcular_hipotenusa():.2f} cm")
+    print(f"Tipo {valores_triangulo.tipo_triangulo()}")
+
+main()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Circulo}
+{%
+- radio \\
+}
+{%
++ calcular\_area() \\
++ calcular\_perimetro() \\
+}
+
+\clasebox{Rectangulo}
+{%
+- base \\
+- altura \\
+}
+{%
++ calcular\_area() \\
++ calcular\_perimetro() \\
+}
+
+\clasebox{Cuadrado}
+{%
+- lado \\
+}
+{%
++ calcular\_area() \\
++ calcular\_perimetro() \\
+}
+
+\clasebox{Triangulo}
+{%
+- base \\
+- altura \\
+- hipotenusa \\
+}
+{%
++ calcular\_area() \\
++ calcular\_perimetro() \\
++ calcular\_hipotenusa() \\
++ tipo\_triangulo() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 2.5
+% ---------------------------------------------------------
+\section{Ejercicio 2.5}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%202/ejercicio5.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+class CuentaBancaria:
+    def __init__(self, nombre, apellido, id, tipo_de_cuenta):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.id = id
+        self.tipo_de_cuenta = tipo_de_cuenta
+        self.saldo = 0
+
+    def consignar(self, valor_consignado):
+        self.saldo = self.saldo + valor_consignado
+        print(f"Consignación exitosa. Nuevo saldo: {self.saldo}")
+
+    def retirar(self, valor_retirado):
+        if self.saldo >= valor_retirado:
+            self.saldo = self.saldo - valor_retirado
+            print(f"Retiro exitoso. Saldo actual: {self.saldo}")
+        else:
+            print("Saldo insuficiente")
+
+    def imprimir_datos(self):
+        print(f"Nombre del titular: {self.nombre}")
+        print(f"Apellido del titular: {self.apellido}")
+        print(f"Identificación: {self.id}")
+        print(f"Tipo de cuenta: {self.tipo_de_cuenta}")
+        print(f"Saldo de la cuenta: {self.saldo}")
+
+def main():
+    print("--- Ingrese los datos ---")
+    nombre = input("Nombres del titular: \n")
+    apellido = input("Apellidos del titular: \n")
+    id = input("Número de cuenta: \n")
+
+    while True:
+        tipo_de_cuenta = input("Tipo de cuenta: \n").lower()
+        if tipo_de_cuenta == "ahorro" or tipo_de_cuenta == "corriente":
+            break
+        else:
+            print("Tipo de cuenta no valido.")
+
+    cuenta = CuentaBancaria(nombre, apellido, id, tipo_de_cuenta)
+
+    while True:
+        print("--- menu ---")
+
+        print("--- 1. consignar valor ---")
+        print("--- 2. retirar valor ---")
+        print("--- 3. consultar datos y saldo ---")
+        print("--- 4. salir ---")
+
+        opcion = input("Ingrese la opcion: \n")
+
+        if opcion == "1":
+            valor_consignar = float(input("Ingrese el valor a consignar: \n"))
+            cuenta.consignar(valor_consignar)
+        elif opcion == "2":
+            valor_retirar = float(input("Ingrese valor a retirar: \n"))
+            cuenta.retirar(valor_retirar)
+        elif opcion == "3":
+            cuenta.imprimir_datos()
+        elif opcion == "4":
+            print("Finalizado exitosamente")
+            break
+        else:
+            print("Opcion no valida")
+
+main()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{CuentaBancaria}
+{%
+- nombre \\
+- apellido \\
+- id \\
+- tipo\_de\_cuenta \\
+- saldo \\
+}
+{%
++ consignar() \\
++ retirar() \\
++ imprimir\_datos() \\
+}
+
+\end{document}

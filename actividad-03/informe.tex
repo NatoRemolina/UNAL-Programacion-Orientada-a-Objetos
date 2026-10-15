@@ -1,0 +1,577 @@
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{amssymb}
+
+\setlist[itemize]{label=-}
+\setcounter{secnumdepth}{0}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=Python,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1 {π}{{$\pi$}}1 {²}{{$^2$}}1 {³}{{$^3$}}1 {¿}{{?`}}1
+}
+\lstset{style=pythonstyle}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Actividad 3 - POO},
+}
+
+% Comando auxiliar para dibujar un cuadro de clase estilo UML
+\newcommand{\clasebox}[3]{%
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\textbf{#1} \\
+\hline
+#2
+\hline
+#3
+\hline
+\end{tabular}
+\end{center}
+}
+
+\begin{document}
+
+% ---------------------------------------------------------
+% PORTADA
+% ---------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\huge \textbf{Universidad Nacional de Colombia}\par}
+    \vspace{0.5cm}
+    {\Large Facultad de Minas\par}
+    \vspace{1.5cm}
+
+    {\Large \textbf{Programación Orientada a Objetos 2026-2}\par}
+    \vspace{2cm}
+
+    {\huge \textbf{Actividad 3}\par}
+    \vspace{0.5cm}
+    {\large Seguimiento y solución de ejercicios prácticos de Programación Orientada a Objetos\par}
+
+    \vspace{3cm}
+
+    \textbf{Presentado por:}\par
+    \vspace{0.5cm}
+    {\Large \textbf{Natalia Patricia Remolina Rodríguez}\par}
+
+    \vspace{2cm}
+
+    \textbf{Docente:}\par
+    Walter Hugo Arboleda Mazo\par
+
+    \vspace{2cm}
+
+    Medellín, Colombia\par
+    17 de septiembre de 2026
+\end{titlepage}
+
+% ---------------------------------------------------------
+% EJERCICIO 3.1
+% ---------------------------------------------------------
+\section{Ejercicio 3.1}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%203/ejercicio1.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import tkinter as tk
+from tkinter import messagebox
+import math
+
+# ==========================================
+# CLASE LÓGICA (Modelo)
+# ==========================================
+class Notas:
+    """Clase encargada de realizar los cálculos matemáticos de las notas."""
+    def __init__(self, lista_notas):
+        self.notas = lista_notas
+
+    def calcular_promedio(self):
+        # Retorna el promedio simple de la lista
+        return sum(self.notas) / len(self.notas)
+
+    def calcular_desviacion_estandar(self):
+        promedio = self.calcular_promedio()
+        # Varianza poblacional: suma de (nota - promedio)^2 / N
+        varianza = sum(math.pow(nota - promedio, 2) for nota in self.notas) / len(self.notas)
+        # Retorna la raíz cuadrada de la varianza
+        return math.sqrt(varianza)
+
+    def calcular_mayor(self):
+        # Retorna el valor máximo de la lista
+        return max(self.notas)
+
+    def calcular_menor(self):
+        # Retorna el valor mínimo de la lista
+        return min(self.notas)
+
+# ==========================================
+# CLASE INTERFAZ GRÁFICA (Vista/Controlador)
+# ==========================================
+class VentanaNotas(tk.Tk):
+    """Clase que representa la ventana principal con una paleta de colores azules."""
+    def __init__(self):
+        super().__init__()
+        
+        # Paleta de colores azul
+        self.color_fondo = "#e3f2fd" # Azul muy claro
+        self.color_texto = "#0d47a1" # Azul oscuro para etiquetas
+        
+        # Configuración básica
+        self.title("Calculadora de Notas")
+        self.geometry("280x380")
+        self.resizable(False, False)
+        # Aplicamos el color de fondo a toda la ventana
+        self.configure(bg=self.color_fondo)
+        
+        self.entradas_notas = []
+        
+        # Inicializar componentes
+        self._crear_componentes()
+        
+        self.eval('tk::PlaceWindow . center')
+
+    def _crear_componentes(self):
+        # Crear los campos de entrada
+        for i in range(5):
+            lbl = tk.Label(self, text=f"Nota {i+1}:", anchor="w", 
+                           bg=self.color_fondo, fg=self.color_texto, font=("Arial", 10, "bold"))
+            lbl.place(x=20, y=20 + (i * 30), width=60, height=25)
+            
+            txt_entry = tk.Entry(self, bd=1, relief="solid")
+            txt_entry.place(x=100, y=20 + (i * 30), width=150, height=25)
+            self.entradas_notas.append(txt_entry)
+
+        # Botones con estilo azul
+        btn_calcular = tk.Button(self, text="Calcular", command=self.action_calcular,
+                                 bg="#2196f3", fg="white", font=("Arial", 9, "bold"))
+        btn_calcular.place(x=20, y=180, width=110, height=30)
+        
+        btn_limpiar = tk.Button(self, text="Limpiar", command=self.action_limpiar,
+                                bg="#1976d2", fg="white", font=("Arial", 9, "bold"))
+        btn_limpiar.place(x=140, y=180, width=110, height=30)
+
+        # Labels de resultados con estilo azul
+        resultado_style = {"bg": self.color_fondo, "fg": self.color_texto, "anchor": "w"}
+        
+        self.lbl_promedio = tk.Label(self, text="Promedio: ", **resultado_style)
+        self.lbl_promedio.place(x=20, y=230, width=240, height=25)
+        
+        self.lbl_desviacion = tk.Label(self, text="Desviación estándar: ", **resultado_style)
+        self.lbl_desviacion.place(x=20, y=260, width=240, height=25)
+        
+        self.lbl_mayor = tk.Label(self, text="Mayor nota: ", **resultado_style)
+        self.lbl_mayor.place(x=20, y=290, width=240, height=25)
+        
+        self.lbl_menor = tk.Label(self, text="Menor nota: ", **resultado_style)
+        self.lbl_menor.place(x=20, y=320, width=240, height=25)
+
+    def action_calcular(self):
+        """Procesa las entradas y muestra resultados."""
+        try:
+            valores = [float(entry.get()) for entry in self.entradas_notas]
+            calculadora = Notas(valores)
+            
+            # Actualizamos textos con los cálculos
+            self.lbl_promedio.config(text=f"Promedio: {calculadora.calcular_promedio():.2f}")
+            self.lbl_desviacion.config(text=f"Desviación estándar: {calculadora.calcular_desviacion_estandar():.2f}")
+            self.lbl_mayor.config(text=f"Mayor nota: {calculadora.calcular_mayor():.2f}")
+            self.lbl_menor.config(text=f"Menor nota: {calculadora.calcular_menor():.2f}")
+            
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese números válidos.")
+
+    def action_limpiar(self):
+        """Limpia la interfaz."""
+        for entry in self.entradas_notas:
+            entry.delete(0, tk.END)
+        self.lbl_promedio.config(text="Promedio: ")
+        self.lbl_desviacion.config(text="Desviación estándar: ")
+        self.lbl_mayor.config(text="Mayor nota: ")
+        self.lbl_menor.config(text="Menor nota: ")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    app = VentanaNotas()
+    app.mainloop()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Notas}
+{%
+- notas \\
+}
+{%
++ calcular\_promedio() \\
++ calcular\_desviacion\_estandar() \\
++ calcular\_mayor() \\
++ calcular\_menor() \\
+}
+
+\clasebox{VentanaNotas}
+{%
+- color\_fondo \\
+- color\_texto \\
+- entradas\_notas \\
+- lbl\_promedio \\
+- lbl\_desviacion \\
+- lbl\_mayor \\
+- lbl\_menor \\
+}
+{%
++ \_crear\_componentes() \\
++ action\_calcular() \\
++ action\_limpiar() \\
+}
+
+\noindent \textbf{Relaciones:}
+\begin{itemize}
+    \item \texttt{VentanaNotas} hereda de \texttt{tk.Tk}.
+    \item \texttt{VentanaNotas} usa (dependencia) a \texttt{Notas} para realizar los cálculos.
+\end{itemize}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 3.2
+% ---------------------------------------------------------
+\section{Ejercicio 3.2}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%203/ejercicio2.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import tkinter as tk
+from tkinter import messagebox
+import math
+
+# ==========================================
+# JERARQUÍA DE CLASES (Lógica del Negocio)
+# ==========================================
+
+class FiguraGeometrica:
+    """Clase base que almacena los resultados de los cálculos."""
+    def __init__(self):
+        self.volumen = 0.0
+        self.superficie = 0.0
+
+    def get_volumen(self):
+        return self.volumen
+
+    def get_superficie(self):
+        return self.superficie
+
+class Cilindro(FiguraGeometrica):
+    def __init__(self, radio, altura):
+        super().__init__()
+        self.radio = radio
+        self.altura = altura
+        self.calcular_volumen()
+        self.calcular_superficie()
+
+    def calcular_volumen(self):
+        # Fórmula: π * r² * h
+        self.volumen = math.pi * (self.radio ** 2) * self.altura
+
+    def calcular_superficie(self):
+        # Fórmula: 2πrh + 2πr²
+        self.superficie = (2 * math.pi * self.radio * self.altura) + (2 * math.pi * (self.radio ** 2))
+
+class Esfera(FiguraGeometrica):
+    def __init__(self, radio):
+        super().__init__()
+        self.radio = radio
+        self.calcular_volumen()
+        self.calcular_superficie()
+
+    def calcular_volumen(self):
+        # Fórmula: 4/3 * π * r³
+        self.volumen = (4.0 / 3.0) * math.pi * (self.radio ** 3)
+
+    def calcular_superficie(self):
+        # Fórmula: 4 * π * r²
+        self.superficie = 4.0 * math.pi * (self.radio ** 2)
+
+class Piramide(FiguraGeometrica):
+    def __init__(self, base, altura, apotema):
+        super().__init__()
+        self.base = base
+        self.altura = altura
+        self.apotema = apotema
+        self.calcular_volumen()
+        self.calcular_superficie()
+
+    def calcular_volumen(self):
+        # Fórmula: (base² * altura) / 3
+        self.volumen = ((self.base ** 2) * self.altura) / 3.0
+
+    def calcular_superficie(self):
+        # Fórmula: base² + 2 * base * apotema
+        self.superficie = (self.base ** 2) + (2.0 * self.base * self.apotema)
+
+
+# ==========================================
+# INTERFAZ GRÁFICA (Tkinter)
+# ==========================================
+
+class VentanaPrincipal(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Figuras Geométricas")
+        self.geometry("300x250")
+        self.configure(bg="#e3f2fd") # Fondo azul claro
+        self.resizable(False, False)
+        self.eval('tk::PlaceWindow . center')
+
+        # Estilo para botones
+        btn_style = {"width": 15, "bg": "#1976d2", "fg": "white", "font": ("Arial", 10, "bold")}
+
+        tk.Label(self, text="Seleccione una figura:", font=("Arial", 12, "bold"), 
+                 bg="#e3f2fd", fg="#0d47a1").pack(pady=20)
+
+        tk.Button(self, text="Cilindro", command=self.abrir_cilindro, **btn_style).pack(pady=5)
+        tk.Button(self, text="Esfera", command=self.abrir_esfera, **btn_style).pack(pady=5)
+        tk.Button(self, text="Pirámide", command=self.abrir_piramide, **btn_style).pack(pady=5)
+
+    def abrir_cilindro(self): VentanaCilindro(self)
+    def abrir_esfera(self): VentanaEsfera(self)
+    def abrir_piramide(self): VentanaPiramide(self)
+
+class VentanaCilindro(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Cilindro")
+        self.geometry("280x250")
+        self.configure(bg="#e3f2fd")
+        
+        tk.Label(self, text="Radio (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_radio = tk.Entry(self)
+        self.txt_radio.pack()
+
+        tk.Label(self, text="Altura (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_altura = tk.Entry(self)
+        self.txt_altura.pack()
+
+        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
+
+        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
+        self.lbl_volumen.pack()
+        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
+        self.lbl_superficie.pack()
+
+    def calcular(self):
+        try:
+            cilindro = Cilindro(float(self.txt_radio.get()), float(self.txt_altura.get()))
+            self.lbl_volumen.config(text=f"Volumen: {cilindro.get_volumen():.2f} cm³")
+            self.lbl_superficie.config(text=f"Superficie: {cilindro.get_superficie():.2f} cm²")
+        except ValueError:
+            messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
+
+class VentanaEsfera(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Esfera")
+        self.geometry("280x200")
+        self.configure(bg="#e3f2fd")
+
+        tk.Label(self, text="Radio (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_radio = tk.Entry(self)
+        self.txt_radio.pack()
+
+        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
+
+        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
+        self.lbl_volumen.pack()
+        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
+        self.lbl_superficie.pack()
+
+    def calcular(self):
+        try:
+            esfera = Esfera(float(self.txt_radio.get()))
+            self.lbl_volumen.config(text=f"Volumen: {esfera.get_volumen():.2f} cm³")
+            self.lbl_superficie.config(text=f"Superficie: {esfera.get_superficie():.2f} cm²")
+        except ValueError:
+            messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
+
+class VentanaPiramide(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Pirámide")
+        self.geometry("280x300")
+        self.configure(bg="#e3f2fd")
+
+        tk.Label(self, text="Base (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_base = tk.Entry(self)
+        self.txt_base.pack()
+
+        tk.Label(self, text="Altura (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_altura = tk.Entry(self)
+        self.txt_altura.pack()
+
+        tk.Label(self, text="Apotema (cm):", bg="#e3f2fd").pack(pady=5)
+        self.txt_apotema = tk.Entry(self)
+        self.txt_apotema.pack()
+
+        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
+
+        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
+        self.lbl_volumen.pack()
+        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
+        self.lbl_superficie.pack()
+
+    def calcular(self):
+        try:
+            piramide = Piramide(float(self.txt_base.get()), float(self.txt_altura.get()), float(self.txt_apotema.get()))
+            self.lbl_volumen.config(text=f"Volumen: {piramide.get_volumen():.2f} cm³")
+            self.lbl_superficie.config(text=f"Superficie: {piramide.get_superficie():.2f} cm²")
+        except ValueError:
+            messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
+
+if __name__ == "__main__":
+    app = VentanaPrincipal()
+    app.mainloop()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{FiguraGeometrica}
+{%
+- volumen \\
+- superficie \\
+}
+{%
++ get\_volumen() \\
++ get\_superficie() \\
+}
+
+\clasebox{Cilindro}
+{%
+- radio \\
+- altura \\
+}
+{%
++ calcular\_volumen() \\
++ calcular\_superficie() \\
+}
+
+\clasebox{Esfera}
+{%
+- radio \\
+}
+{%
++ calcular\_volumen() \\
++ calcular\_superficie() \\
+}
+
+\clasebox{Piramide}
+{%
+- base \\
+- altura \\
+- apotema \\
+}
+{%
++ calcular\_volumen() \\
++ calcular\_superficie() \\
+}
+
+\clasebox{VentanaPrincipal}
+{%
+\\
+}
+{%
++ abrir\_cilindro() \\
++ abrir\_esfera() \\
++ abrir\_piramide() \\
+}
+
+\clasebox{VentanaCilindro}
+{%
+- txt\_radio \\
+- txt\_altura \\
+- lbl\_volumen \\
+- lbl\_superficie \\
+}
+{%
++ calcular() \\
+}
+
+\clasebox{VentanaEsfera}
+{%
+- txt\_radio \\
+- lbl\_volumen \\
+- lbl\_superficie \\
+}
+{%
++ calcular() \\
+}
+
+\clasebox{VentanaPiramide}
+{%
+- txt\_base \\
+- txt\_altura \\
+- txt\_apotema \\
+- lbl\_volumen \\
+- lbl\_superficie \\
+}
+{%
++ calcular() \\
+}
+
+\noindent \textbf{Relaciones:}
+\begin{itemize}
+    \item \texttt{Cilindro}, \texttt{Esfera} y \texttt{Piramide} heredan de \texttt{FiguraGeometrica}.
+    \item \texttt{VentanaPrincipal} hereda de \texttt{tk.Tk} y abre las ventanas de cada figura.
+    \item \texttt{VentanaCilindro}, \texttt{VentanaEsfera} y \texttt{VentanaPiramide} heredan de \texttt{tk.Toplevel} y usan su figura correspondiente para los cálculos.
+\end{itemize}
+
+\end{document}

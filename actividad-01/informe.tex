@@ -1,0 +1,555 @@
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{amssymb}
+
+\setlist[itemize]{label=-}
+\setcounter{secnumdepth}{0}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=Python,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1 {π}{{$\pi$}}1
+}
+\lstset{style=pythonstyle}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Actividad 1 - POO},
+}
+
+% Comando auxiliar para dibujar un cuadro de clase estilo UML
+\newcommand{\clasebox}[3]{%
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\textbf{#1} \\
+\hline
+#2
+\hline
+#3
+\hline
+\end{tabular}
+\end{center}
+}
+
+\begin{document}
+
+% ---------------------------------------------------------
+% PORTADA
+% ---------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\huge \textbf{Universidad Nacional de Colombia}\par}
+    \vspace{0.5cm}
+    {\Large Facultad de Minas\par}
+    \vspace{1.5cm}
+
+    {\Large \textbf{Programación Orientada a Objetos 2026-2}\par}
+    \vspace{2cm}
+
+    {\huge \textbf{Actividad 1}\par}
+    \vspace{0.5cm}
+    {\large Seguimiento y solución de ejercicios prácticos de Programación Orientada a Objetos\par}
+
+    \vspace{3cm}
+
+    \textbf{Presentado por:}\par
+    \vspace{0.5cm}
+    {\Large \textbf{Natalia Patricia Remolina Rodríguez}\par}
+
+    \vspace{2cm}
+
+    \textbf{Docente:}\par
+    Walter Hugo Arboleda Mazo\par
+
+    \vspace{2cm}
+
+    Medellín, Colombia\par
+    17 de septiembre de 2026
+\end{titlepage}
+
+% ---------------------------------------------------------
+% EJERCICIO 1.4
+% ---------------------------------------------------------
+\section{Ejercicio 1.4}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%201/ejercicio4.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import sys
+
+class Familia:
+    """
+    Clase encargada de calcular y almacenar las edades de los miembros 
+    de la familia en función de la edad de Juan.
+    """
+    def __init__(self):
+        # Inicializamos los atributos de las edades en cero
+        self.edad_juan = 0
+        self.edad_alberto = 0.0
+        self.edad_ana = 0.0
+        self.edad_mama = 0.0
+
+    def solicitar_datos(self):
+        """
+        Solicita la edad de Juan por consola. 
+        Incluye un manejo de excepciones para asegurar que la entrada sea numérica.
+        """
+        try:
+            print("Ingrese la edad de Juan: ")
+            # Lectura de datos desde la entrada estándar
+            input_data = sys.stdin.readline()
+            
+            # Si la entrada está vacía (útil para pruebas automatizadas), asignamos un valor por defecto
+            if not input_data.strip():
+                self.edad_juan = 9 
+                print(f"Usando valor por defecto: {self.edad_juan}")
+            else:
+                # Convertimos la entrada a un número entero
+                self.edad_juan = int(input_data)
+                
+        except ValueError:
+            print("Por favor, ingrese un número entero válido.")
+
+    def calcular_edades(self):
+        """
+        Aplica las proporciones matemáticas dadas para calcular 
+        las edades de Alberto, Ana y la madre en base a la edad de Juan.
+        """
+        # Edad de Alberto: 2/3 de la edad de Juan
+        self.edad_alberto = (2 / 3) * self.edad_juan
+        
+        # Edad de Ana: 4/3 de la edad de Juan
+        self.edad_ana = (4 / 3) * self.edad_juan
+        
+        # Edad de la mamá: suma de las edades de sus tres hijos
+        self.edad_mama = self.edad_juan + self.edad_alberto + self.edad_ana
+
+    def mostrar_resultados(self):
+        """
+        Imprime en consola las edades calculadas, formateando 
+        los números para no mostrar decimales (.0f).
+        """
+        print(f"La edad de Juan es: {self.edad_juan}")
+        print(f"La edad de Alberto es: {self.edad_alberto:.0f}")
+        print(f"La edad de Ana es: {self.edad_ana:.0f}")
+        print(f"La edad de la Mamá es: {self.edad_mama:.0f}")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    # Instanciamos la clase Familia y ejecutamos los métodos secuencialmente
+    familia = Familia()
+    familia.solicitar_datos()
+    familia.calcular_edades()
+    familia.mostrar_resultados()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Familia}
+{%
+- edad\_juan \\
+- edad\_alberto \\
+- edad\_ana \\
+- edad\_mama \\
+}
+{%
++ solicitar\_datos() \\
++ calcular\_edades() \\
++ mostrar\_resultados() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 1.5
+% ---------------------------------------------------------
+\section{Ejercicio 1.5}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%201/ejercicio5.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+class PruebaEscritorio:
+    """
+    Clase diseñada para simular paso a paso la prueba de escritorio 
+    del algoritmo propuesto, mostrando el estado de las variables en memoria.
+    """
+    def __init__(self):
+        # Inicializamos las variables que se utilizarán en el algoritmo
+        self.suma = 0
+        self.x = 0
+        self.y = 0
+
+    def ejecutar_algoritmo(self):
+        """
+        Ejecuta secuencialmente las instrucciones del seudocódigo
+        e imprime el valor de las variables para evidenciar el seguimiento.
+        """
+        # Paso 1: Inicializar la variable acumuladora SUMA en 0
+        self.suma = 0
+        print(f"Paso 1 -> Inicio: SUMA = {self.suma}")
+
+        # Paso 2: Asignar el valor 20 a la variable X
+        self.x = 20
+        print(f"Paso 2 -> X asignado: {self.x}")
+
+        # Paso 3: Acumular el valor actual de X en SUMA (0 + 20)
+        self.suma = self.suma + self.x
+        print(f"Paso 3 -> SUMA = SUMA + X: {self.suma}")
+
+        # Paso 4: Asignar el valor 40 a la variable Y
+        self.y = 40
+        print(f"Paso 4 -> Y asignado: {self.y}")
+
+        # Paso 5: Actualizar X sumándole el cuadrado de Y (20 + 40^2)
+        # Nota: En Python, el operador de potenciación es **
+        self.x = self.x + (self.y ** 2)
+        print(f"Paso 5 -> X = X + Y^2: {self.x}")
+
+        # Paso 6: Acumular en SUMA el resultado de la división X / Y
+        self.suma = self.suma + (self.x / self.y)
+        print(f"Paso 6 -> SUMA = SUMA + X/Y: {self.suma}")
+
+        # Salida final exigida por el algoritmo
+        print("\n--- Resultado ---")
+        print(f"EL VALOR DE LA SUMA ES: {self.suma}")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    # Instanciamos la clase y ejecutamos la simulación del algoritmo
+    prueba = PruebaEscritorio()
+    prueba.ejecutar_algoritmo()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{PruebaEscritorio}
+{%
+- suma \\
+- x \\
+- y \\
+}
+{%
++ ejecutar\_algoritmo() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 1.12
+% ---------------------------------------------------------
+\section{Ejercicio 1.12}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%201/ejercicio12.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+class Empleado:
+    """
+    Clase que modela la información laboral de un empleado y calcula 
+    su estructura salarial (bruto, retenciones y neto) aplicando
+    conceptos de Programación Orientada a Objetos.
+    """
+    def __init__(self):
+        # Inicialización de atributos base del empleado
+        self.horas_trabajadas = 0
+        self.valor_hora = 0
+        self.porcentaje_retencion = 0.0
+        
+        # Inicialización de atributos que almacenarán los resultados calculados
+        self.salario_bruto = 0.0
+        self.retencion = 0.0
+        self.salario_neto = 0.0
+
+    def ingresar_datos(self):
+        """
+        Asigna los valores iniciales y constantes definidos por el 
+        enunciado del problema.
+        """
+        self.horas_trabajadas = 48
+        self.valor_hora = 5000
+        self.porcentaje_retencion = 12.5  # Representa el 12.5% de retención en la fuente
+
+    def calcular_salario(self):
+        """
+        Ejecuta las operaciones matemáticas para determinar el salario 
+        bruto, el monto de descuento y el salario líquido final.
+        """
+        # Salario bruto: Total ganado sin aplicar ningún descuento
+        self.salario_bruto = self.horas_trabajadas * self.valor_hora
+        
+        # Retención: Se obtiene multiplicando el bruto por el porcentaje dividido entre 100
+        self.retencion = self.salario_bruto * (self.porcentaje_retencion / 100)
+        
+        # Salario neto: La diferencia entre el devengado (bruto) y lo deducido (retención)
+        self.salario_neto = self.salario_bruto - self.retencion
+
+    def mostrar_info(self):
+        """
+        Imprime el desglose salarial en consola, utilizando f-strings 
+        para formatear las salidas financieras con separadores de miles y decimales.
+        """
+        print("--- Información Salarial del Trabajador ---")
+        print(f"Horas trabajadas en la semana: {self.horas_trabajadas}")
+        print(f"Valor por hora: ${self.valor_hora}")
+        print(f"Porcentaje de retención: {self.porcentaje_retencion}%")
+        print("-" * 41)
+        
+        # El formato :,.2f añade comas para miles y muestra exactamente dos decimales
+        print(f"Salario Bruto:           ${self.salario_bruto:,.2f}")
+        print(f"Retención en la fuente:  ${self.retencion:,.2f}")
+        print(f"Salario Neto a pagar:    ${self.salario_neto:,.2f}")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    # Instanciamos el objeto empleado y ejecutamos el flujo de cálculo salarial
+    empleado = Empleado()
+    empleado.ingresar_datos()
+    empleado.calcular_salario()
+    empleado.mostrar_info()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Empleado}
+{%
+- horas\_trabajadas \\
+- valor\_hora \\
+- porcentaje\_retencion \\
+- salario\_bruto \\
+- retencion \\
+- salario\_neto \\
+}
+{%
++ ingresar\_datos() \\
++ calcular\_salario() \\
++ mostrar\_info() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 1.14
+% ---------------------------------------------------------
+\section{Ejercicio 1.14}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%201/ejercicio14.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import sys
+
+class Calculadora:
+    """
+    Clase diseñada para encapsular operaciones matemáticas básicas,
+    permitiendo calcular dinámicamente el cuadrado y el cubo de un número.
+    """
+    def __init__(self):
+        # Inicializamos el atributo que almacenará el número a procesar
+        self.numero = 0.0
+
+    def leer_numero(self):
+        """
+        Captura el número ingresado por el usuario a través de la consola.
+        Implementa manejo de excepciones para garantizar que el programa
+        no colapse ante entradas que no sean numéricas.
+        """
+        try:
+            print("Ingrese un número para calcular su cuadrado y cubo: ")
+            # Se utiliza sys.stdin.readline() para una lectura segura en distintos entornos
+            input_data = sys.stdin.readline().strip()
+            
+            if not input_data:
+                # Valor por defecto en caso de ejecuciones automatizadas o entradas vacías
+                self.numero = 5.0  
+                print(f"Usando valor por defecto: {self.numero}")
+            else:
+                # Convertimos la entrada a un tipo de dato flotante para admitir decimales
+                self.numero = float(input_data)
+                
+        except ValueError:
+            print("Entrada inválida. Por favor ingrese un valor numérico. Usando 0.0 por defecto.")
+            self.numero = 0.0
+
+    def calcular_potencias(self):
+        """
+        Calcula las potencias requeridas utilizando el operador de 
+        exponenciación de Python (**) e imprime los resultados.
+        """
+        # El cuadrado es el número elevado a la potencia de 2
+        cuadrado = self.numero ** 2
+        
+        # El cubo es el número elevado a la potencia de 3
+        cubo = self.numero ** 3
+        
+        # Despliegue de los resultados en consola con un formato limpio
+        print(f"\nResultados para el número: {self.numero}")
+        print("-" * 35)
+        print(f"El cuadrado de {self.numero} es: {cuadrado}")
+        print(f"El cubo de {self.numero} es: {cubo}")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    # Instanciamos el objeto calculadora y ejecutamos los métodos de lectura y cálculo
+    calc = Calculadora()
+    calc.leer_numero()
+    calc.calcular_potencias()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Calculadora}
+{%
+- numero \\
+}
+{%
++ leer\_numero() \\
++ calcular\_potencias() \\
+}
+
+\newpage
+% ---------------------------------------------------------
+% EJERCICIO 1.17
+% ---------------------------------------------------------
+\section{Ejercicio 1.17}
+
+\noindent \textbf{Enlace al repositorio en GitHub:} \\
+\url{https://github.com/NatoRemolina/UNAL-Programacion-Orientada-a-Objetos/blob/main/Actividad%201/ejercicio17.py}
+
+\subsection{Código fuente}
+\begin{lstlisting}
+import math
+import sys
+
+class Circulo:
+    """
+    Clase que modela un círculo y permite calcular sus propiedades 
+    geométricas principales (área y longitud de la circunferencia) 
+    a partir de la medida de su radio.
+    """
+    def __init__(self):
+        # Inicializamos los atributos en 0.0 para trabajar con valores decimales (flotantes)
+        self.radio = 0.0
+        self.area = 0.0
+        self.longitud = 0.0
+
+    def leer_radio(self):
+        """
+        Captura el radio ingresado por el usuario a través de la consola,
+        implementando un manejo de excepciones para evitar que el programa 
+        falle si se ingresa texto en lugar de números.
+        """
+        try:
+            print("Ingrese el radio del círculo: ")
+            # Se usa sys.stdin.readline() para una lectura segura y compatible en distintos entornos
+            input_data = sys.stdin.readline().strip()
+            
+            if not input_data:
+                # Se asigna un valor por defecto si la entrada está vacía (útil en pruebas)
+                self.radio = 10.0  
+                print(f"Usando valor por defecto: {self.radio}")
+            else:
+                self.radio = float(input_data)
+                
+        except ValueError:
+            print("Entrada inválida. Por favor ingrese un valor numérico. Usando 0.0 por defecto.")
+            self.radio = 0.0
+
+    def calcular_propiedades(self):
+        """
+        Aplica las fórmulas matemáticas estándar haciendo uso de la constante pi 
+        proporcionada por la librería math de Python.
+        """
+        # Cálculo del área: Pi multiplicado por el radio al cuadrado (π * r^2)
+        self.area = math.pi * (self.radio ** 2)
+        
+        # Cálculo de la longitud (perímetro): 2 multiplicado por Pi por el radio (2 * π * r)
+        self.longitud = 2 * math.pi * self.radio
+
+    def mostrar_resultados(self):
+        """
+        Imprime los resultados en consola. Se utiliza el formato :.4f 
+        para redondear la salida a exactamente cuatro decimales.
+        """
+        print(f"\nResultados para el círculo de radio: {self.radio}")
+        print("-" * 45)
+        print(f"Área del círculo:              {self.area:.4f}")
+        print(f"Longitud de la circunferencia: {self.longitud:.4f}")
+
+# ==========================================
+# BLOQUE PRINCIPAL
+# ==========================================
+if __name__ == "__main__":
+    # Instanciamos el objeto Circulo y ejecutamos sus métodos en secuencia
+    mi_circulo = Circulo()
+    mi_circulo.leer_radio()
+    mi_circulo.calcular_propiedades()
+    mi_circulo.mostrar_resultados()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+\clasebox{Circulo}
+{%
+- radio \\
+- area \\
+- longitud \\
+}
+{%
++ leer\_radio() \\
++ calcular\_propiedades() \\
++ mostrar\_resultados() \\
+}
+
+\end{document}
