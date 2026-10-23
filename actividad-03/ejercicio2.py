@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 import math
 
 # ==========================================
@@ -66,6 +66,100 @@ class Piramide(FiguraGeometrica):
         # Fórmula: base² + 2 * base * apotema
         self.superficie = (self.base ** 2) + (2.0 * self.base * self.apotema)
 
+class Cubo(FiguraGeometrica):
+    def __init__(self, lado):
+        super().__init__()
+        self.lado = lado
+        self.calcular_volumen()
+        self.calcular_superficie()
+
+    def calcular_volumen(self):
+        # Fórmula: lado³
+        self.volumen = self.lado ** 3
+
+    def calcular_superficie(self):
+        # Fórmula: 6 * lado²
+        self.superficie = 6.0 * (self.lado ** 2)
+
+class Prisma(FiguraGeometrica):
+    """Prisma rectangular definido por su largo, ancho y altura."""
+    def __init__(self, largo, ancho, altura):
+        super().__init__()
+        self.largo = largo
+        self.ancho = ancho
+        self.altura = altura
+        self.calcular_volumen()
+        self.calcular_superficie()
+
+    def calcular_volumen(self):
+        # Fórmula: largo * ancho * altura
+        self.volumen = self.largo * self.ancho * self.altura
+
+    def calcular_superficie(self):
+        # Fórmula: 2 * (largo*ancho + largo*altura + ancho*altura)
+        self.superficie = 2.0 * ((self.largo * self.ancho) +
+                                 (self.largo * self.altura) +
+                                 (self.ancho * self.altura))
+
+
+# ==========================================
+# IMÁGENES DE LAS FIGURAS (dibujadas con Canvas)
+# ==========================================
+
+COLOR_FONDO = "#e3f2fd"
+COLOR_BORDE = "#0d47a1"
+COLOR_RELLENO = "#90caf9"
+
+def configurar_estilos(ventana):
+    """Define el estilo azul de los botones.
+
+    Se usa ttk con el tema "clam" porque los botones tk no admiten colores
+    de fondo en macOS y el texto blanco quedaría ilegible.
+    """
+    estilo = ttk.Style(ventana)
+    estilo.theme_use("clam")
+    estilo.configure("Menu.TButton", background="#1976d2", foreground="white",
+                     font=("Arial", 10, "bold"), borderwidth=0, focuscolor="#1976d2")
+    estilo.map("Menu.TButton", background=[("active", "#0d47a1")])
+    estilo.configure("Calcular.TButton", background="#2196f3", foreground="white",
+                     font=("Arial", 10, "bold"), borderwidth=0, focuscolor="#2196f3")
+    estilo.map("Calcular.TButton", background=[("active", "#1565c0")])
+
+def dibujar_figura(canvas, tipo):
+    """Dibuja sobre el canvas la imagen de la figura geométrica indicada."""
+    estilo = {"outline": COLOR_BORDE, "fill": COLOR_RELLENO, "width": 2}
+
+    if tipo == "cilindro":
+        canvas.create_oval(40, 85, 120, 105, **estilo)
+        canvas.create_rectangle(40, 25, 120, 95, outline="", fill=COLOR_RELLENO)
+        canvas.create_line(40, 25, 40, 95, fill=COLOR_BORDE, width=2)
+        canvas.create_line(120, 25, 120, 95, fill=COLOR_BORDE, width=2)
+        canvas.create_oval(40, 15, 120, 35, **estilo)
+
+    elif tipo == "esfera":
+        canvas.create_oval(40, 20, 120, 100, **estilo)
+        canvas.create_oval(40, 50, 120, 70, outline=COLOR_BORDE, width=1)
+
+    elif tipo == "piramide":
+        canvas.create_polygon(80, 15, 35, 85, 125, 85,
+                              outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_oval(35, 75, 125, 95, outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_line(80, 15, 80, 85, fill=COLOR_BORDE, width=1, dash=(3, 2))
+
+    elif tipo == "cubo":
+        canvas.create_polygon(45, 40, 70, 20, 130, 20, 105, 40,
+                              outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_polygon(105, 40, 130, 20, 130, 80, 105, 100,
+                              outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_rectangle(45, 40, 105, 100, **estilo)
+
+    elif tipo == "prisma":
+        canvas.create_polygon(35, 45, 60, 25, 140, 25, 115, 45,
+                              outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_polygon(115, 45, 140, 25, 140, 75, 115, 95,
+                              outline=COLOR_BORDE, fill=COLOR_RELLENO, width=2)
+        canvas.create_rectangle(35, 45, 115, 95, **estilo)
+
 
 # ==========================================
 # INTERFAZ GRÁFICA (Tkinter)
@@ -75,114 +169,111 @@ class VentanaPrincipal(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Figuras Geométricas")
-        self.geometry("300x250")
-        self.configure(bg="#e3f2fd") # Fondo azul claro
+        self.geometry("300x340")
+        self.configure(bg=COLOR_FONDO) # Fondo azul claro
         self.resizable(False, False)
         self.eval('tk::PlaceWindow . center')
 
         # Estilo para botones
-        btn_style = {"width": 15, "bg": "#1976d2", "fg": "white", "font": ("Arial", 10, "bold")}
+        configurar_estilos(self)
+        btn_style = {"width": 15, "style": "Menu.TButton"}
 
-        tk.Label(self, text="Seleccione una figura:", font=("Arial", 12, "bold"), 
-                 bg="#e3f2fd", fg="#0d47a1").pack(pady=20)
+        tk.Label(self, text="Seleccione una figura:", font=("Arial", 12, "bold"),
+                 bg=COLOR_FONDO, fg=COLOR_BORDE).pack(pady=20)
 
-        tk.Button(self, text="Cilindro", command=self.abrir_cilindro, **btn_style).pack(pady=5)
-        tk.Button(self, text="Esfera", command=self.abrir_esfera, **btn_style).pack(pady=5)
-        tk.Button(self, text="Pirámide", command=self.abrir_piramide, **btn_style).pack(pady=5)
+        ttk.Button(self, text="Cilindro", command=self.abrir_cilindro, **btn_style).pack(pady=5)
+        ttk.Button(self, text="Esfera", command=self.abrir_esfera, **btn_style).pack(pady=5)
+        ttk.Button(self, text="Pirámide", command=self.abrir_piramide, **btn_style).pack(pady=5)
+        ttk.Button(self, text="Cubo", command=self.abrir_cubo, **btn_style).pack(pady=5)
+        ttk.Button(self, text="Prisma", command=self.abrir_prisma, **btn_style).pack(pady=5)
 
     def abrir_cilindro(self): VentanaCilindro(self)
     def abrir_esfera(self): VentanaEsfera(self)
     def abrir_piramide(self): VentanaPiramide(self)
+    def abrir_cubo(self): VentanaCubo(self)
+    def abrir_prisma(self): VentanaPrisma(self)
 
-class VentanaCilindro(tk.Toplevel):
-    def __init__(self, parent):
+class VentanaFigura(tk.Toplevel):
+    """Ventana base: muestra la imagen de la figura y sus campos de entrada."""
+    def __init__(self, parent, titulo, tipo, etiquetas, alto):
         super().__init__(parent)
-        self.title("Cilindro")
-        self.geometry("280x250")
-        self.configure(bg="#e3f2fd")
-        
-        tk.Label(self, text="Radio (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_radio = tk.Entry(self)
-        self.txt_radio.pack()
+        self.title(titulo)
+        self.geometry(f"280x{alto}")
+        self.configure(bg=COLOR_FONDO)
 
-        tk.Label(self, text="Altura (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_altura = tk.Entry(self)
-        self.txt_altura.pack()
+        # Imagen de la figura geométrica
+        canvas = tk.Canvas(self, width=160, height=120, bg=COLOR_FONDO, highlightthickness=0)
+        canvas.pack(pady=5)
+        dibujar_figura(canvas, tipo)
 
-        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
+        # Un campo de entrada por cada dato solicitado
+        self.entradas = []
+        for etiqueta in etiquetas:
+            tk.Label(self, text=etiqueta, bg=COLOR_FONDO).pack(pady=2)
+            txt_entry = tk.Entry(self)
+            txt_entry.pack()
+            self.entradas.append(txt_entry)
 
-        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
+        ttk.Button(self, text="Calcular", command=self.calcular,
+                   style="Calcular.TButton").pack(pady=10)
+
+        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg=COLOR_FONDO)
         self.lbl_volumen.pack()
-        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
+        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg=COLOR_FONDO)
         self.lbl_superficie.pack()
+
+    def crear_figura(self, valores):
+        """Cada ventana construye su propia figura con los valores ingresados."""
+        raise NotImplementedError
 
     def calcular(self):
         try:
-            cilindro = Cilindro(float(self.txt_radio.get()), float(self.txt_altura.get()))
-            self.lbl_volumen.config(text=f"Volumen: {cilindro.get_volumen():.2f} cm³")
-            self.lbl_superficie.config(text=f"Superficie: {cilindro.get_superficie():.2f} cm²")
+            valores = [float(entrada.get()) for entrada in self.entradas]
+            figura = self.crear_figura(valores)
+            self.lbl_volumen.config(text=f"Volumen: {figura.get_volumen():.2f} cm³")
+            self.lbl_superficie.config(text=f"Superficie: {figura.get_superficie():.2f} cm²")
         except ValueError:
             messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
 
-class VentanaEsfera(tk.Toplevel):
+class VentanaCilindro(VentanaFigura):
     def __init__(self, parent):
-        super().__init__(parent)
-        self.title("Esfera")
-        self.geometry("280x200")
-        self.configure(bg="#e3f2fd")
+        super().__init__(parent, "Cilindro", "cilindro",
+                         ["Radio (cm):", "Altura (cm):"], 370)
 
-        tk.Label(self, text="Radio (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_radio = tk.Entry(self)
-        self.txt_radio.pack()
+    def crear_figura(self, valores):
+        return Cilindro(valores[0], valores[1])
 
-        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
-
-        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
-        self.lbl_volumen.pack()
-        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
-        self.lbl_superficie.pack()
-
-    def calcular(self):
-        try:
-            esfera = Esfera(float(self.txt_radio.get()))
-            self.lbl_volumen.config(text=f"Volumen: {esfera.get_volumen():.2f} cm³")
-            self.lbl_superficie.config(text=f"Superficie: {esfera.get_superficie():.2f} cm²")
-        except ValueError:
-            messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
-
-class VentanaPiramide(tk.Toplevel):
+class VentanaEsfera(VentanaFigura):
     def __init__(self, parent):
-        super().__init__(parent)
-        self.title("Pirámide")
-        self.geometry("280x300")
-        self.configure(bg="#e3f2fd")
+        super().__init__(parent, "Esfera", "esfera",
+                         ["Radio (cm):"], 320)
 
-        tk.Label(self, text="Base (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_base = tk.Entry(self)
-        self.txt_base.pack()
+    def crear_figura(self, valores):
+        return Esfera(valores[0])
 
-        tk.Label(self, text="Altura (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_altura = tk.Entry(self)
-        self.txt_altura.pack()
+class VentanaPiramide(VentanaFigura):
+    def __init__(self, parent):
+        super().__init__(parent, "Pirámide", "piramide",
+                         ["Base (cm):", "Altura (cm):", "Apotema (cm):"], 420)
 
-        tk.Label(self, text="Apotema (cm):", bg="#e3f2fd").pack(pady=5)
-        self.txt_apotema = tk.Entry(self)
-        self.txt_apotema.pack()
+    def crear_figura(self, valores):
+        return Piramide(valores[0], valores[1], valores[2])
 
-        tk.Button(self, text="Calcular", command=self.calcular, bg="#2196f3", fg="white").pack(pady=15)
+class VentanaCubo(VentanaFigura):
+    def __init__(self, parent):
+        super().__init__(parent, "Cubo", "cubo",
+                         ["Lado (cm):"], 320)
 
-        self.lbl_volumen = tk.Label(self, text="Volumen: ", bg="#e3f2fd")
-        self.lbl_volumen.pack()
-        self.lbl_superficie = tk.Label(self, text="Superficie: ", bg="#e3f2fd")
-        self.lbl_superficie.pack()
+    def crear_figura(self, valores):
+        return Cubo(valores[0])
 
-    def calcular(self):
-        try:
-            piramide = Piramide(float(self.txt_base.get()), float(self.txt_altura.get()), float(self.txt_apotema.get()))
-            self.lbl_volumen.config(text=f"Volumen: {piramide.get_volumen():.2f} cm³")
-            self.lbl_superficie.config(text=f"Superficie: {piramide.get_superficie():.2f} cm²")
-        except ValueError:
-            messagebox.showerror("Error", "Ingrese valores numéricos válidos.")
+class VentanaPrisma(VentanaFigura):
+    def __init__(self, parent):
+        super().__init__(parent, "Prisma", "prisma",
+                         ["Largo (cm):", "Ancho (cm):", "Altura (cm):"], 420)
+
+    def crear_figura(self, valores):
+        return Prisma(valores[0], valores[1], valores[2])
 
 if __name__ == "__main__":
     app = VentanaPrincipal()

@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 import math
 
 # ==========================================
@@ -66,13 +66,24 @@ class VentanaNotas(tk.Tk):
             txt_entry.place(x=100, y=20 + (i * 30), width=150, height=25)
             self.entradas_notas.append(txt_entry)
 
-        # Botones con estilo azul
-        btn_calcular = tk.Button(self, text="Calcular", command=self.action_calcular,
-                                 bg="#2196f3", fg="white", font=("Arial", 9, "bold"))
+        # Botones con estilo azul.
+        # Se usa ttk con el tema "clam" porque los botones tk no admiten
+        # colores de fondo en macOS y quedarían ilegibles.
+        estilo = ttk.Style(self)
+        estilo.theme_use("clam")
+        estilo.configure("Calcular.TButton", background="#2196f3", foreground="white",
+                         font=("Arial", 9, "bold"), borderwidth=0, focuscolor="#2196f3")
+        estilo.map("Calcular.TButton", background=[("active", "#1565c0")])
+        estilo.configure("Limpiar.TButton", background="#1976d2", foreground="white",
+                         font=("Arial", 9, "bold"), borderwidth=0, focuscolor="#1976d2")
+        estilo.map("Limpiar.TButton", background=[("active", "#0d47a1")])
+
+        btn_calcular = ttk.Button(self, text="Calcular", command=self.action_calcular,
+                                  style="Calcular.TButton")
         btn_calcular.place(x=20, y=180, width=110, height=30)
-        
-        btn_limpiar = tk.Button(self, text="Limpiar", command=self.action_limpiar,
-                                bg="#1976d2", fg="white", font=("Arial", 9, "bold"))
+
+        btn_limpiar = ttk.Button(self, text="Limpiar", command=self.action_limpiar,
+                                 style="Limpiar.TButton")
         btn_limpiar.place(x=140, y=180, width=110, height=30)
 
         # Labels de resultados con estilo azul
@@ -92,6 +103,17 @@ class VentanaNotas(tk.Tk):
 
     def action_calcular(self):
         """Procesa las entradas y muestra resultados."""
+        # Es obligatorio ingresar las cinco notas: se avisa cuáles faltan
+        faltantes = [i + 1 for i, entry in enumerate(self.entradas_notas)
+                     if not entry.get().strip()]
+        if faltantes:
+            notas_faltantes = ", ".join(str(numero) for numero in faltantes)
+            messagebox.showwarning(
+                "Datos incompletos",
+                f"Es obligatorio ingresar las cinco notas.\nFalta la nota: {notas_faltantes}."
+            )
+            return
+
         try:
             valores = [float(entry.get()) for entry in self.entradas_notas]
             calculadora = Notas(valores)
