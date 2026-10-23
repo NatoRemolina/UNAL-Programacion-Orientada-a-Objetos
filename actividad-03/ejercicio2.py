@@ -27,11 +27,11 @@ class Cilindro(FiguraGeometrica):
         self.calcular_superficie()
 
     def calcular_volumen(self):
-        # Fórmula: π * r² * h
+        # Fórmula: pi * r² * h
         self.volumen = math.pi * (self.radio ** 2) * self.altura
 
     def calcular_superficie(self):
-        # Fórmula: 2πrh + 2πr²
+        # Fórmula: 2 * pi * r * h + 2 * pi * r²
         self.superficie = (2 * math.pi * self.radio * self.altura) + (2 * math.pi * (self.radio ** 2))
 
 class Esfera(FiguraGeometrica):
@@ -42,11 +42,11 @@ class Esfera(FiguraGeometrica):
         self.calcular_superficie()
 
     def calcular_volumen(self):
-        # Fórmula: 4/3 * π * r³
+        # Fórmula: 4/3 * pi * r³
         self.volumen = (4.0 / 3.0) * math.pi * (self.radio ** 3)
 
     def calcular_superficie(self):
-        # Fórmula: 4 * π * r²
+        # Fórmula: 4 * pi * r²
         self.superficie = 4.0 * math.pi * (self.radio ** 2)
 
 class Piramide(FiguraGeometrica):

@@ -7,6 +7,8 @@
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 
 \usepackage{graphicx}
+% Busca las imagenes en la carpeta img/ o junto al .tex
+\graphicspath{{img/}{./}}
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -196,8 +198,8 @@ las notas 5.0, 3.5, 2.5, 4.5 y 3.6 y se presiona el botón \textit{Calcular}.
 
 \objetobox{ventana : VentanaNotas}
 {%
-color\_fondo = "\#e3f2fd" \\
-color\_texto = "\#0d47a1" \\
+color\_fondo = ``\#e3f2fd'' \\
+color\_texto = ``\#0d47a1'' \\
 entradas\_notas = [5.0, 3.5, 2.5, 4.5, 3.6] \\
 }
 
@@ -226,10 +228,10 @@ promedio = 3.82, desviación estándar = 0.87, mayor nota = 5.00 y menor nota = 
                            5. El sistema calcula promedio, desviación estándar, mayor y menor. \newline
                            6. El sistema muestra los cuatro resultados en la parte inferior. \\
 \textbf{Flujo alterno A} & En el paso 3, si alguna casilla está vacía, el sistema muestra la
-                           alerta \textit{"Es obligatorio ingresar las cinco notas"} e indica
+                           alerta \textit{``Es obligatorio ingresar las cinco notas''} e indica
                            cuáles faltan. El caso de uso termina. \\
 \textbf{Flujo alterno B} & En el paso 4, si algún valor no es numérico, el sistema muestra la
-                           alerta \textit{"Por favor, ingrese números válidos"}. El caso de uso termina. \\
+                           alerta \textit{``Por favor, ingrese números válidos''}. El caso de uso termina. \\
 \textbf{Postcondición} & Los cuatro indicadores quedan visibles en la ventana. \\
 \bottomrule
 \end{tabularx}
@@ -256,9 +258,9 @@ promedio = 3.82, desviación estándar = 0.87, mayor nota = 5.00 y menor nota = 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.42\textwidth]{img/notas_inicial.png}
+    \includegraphics[width=0.42\textwidth]{notas_inicial.png}
     \hspace{0.04\textwidth}
-    \includegraphics[width=0.42\textwidth]{img/notas_resultado.png}
+    \includegraphics[width=0.42\textwidth]{notas_resultado.png}
     \caption{Ventana principal al iniciar la aplicación (izquierda) y resultado del
              procesamiento de las cinco notas (derecha).}
 \end{figure}
@@ -270,9 +272,9 @@ promedio = 3.82, desviación estándar = 0.87, mayor nota = 5.00 y menor nota = 
 % ---------------------------------------------------------
 % \begin{figure}[H]
 %     \centering
-%     \includegraphics[width=0.45\textwidth]{img/notas_alerta_incompletos.png}
+%     \includegraphics[width=0.45\textwidth]{notas_alerta_incompletos.png}
 %     \hspace{0.04\textwidth}
-%     \includegraphics[width=0.45\textwidth]{img/notas_alerta_texto.png}
+%     \includegraphics[width=0.45\textwidth]{notas_alerta_texto.png}
 %     \caption{Alertas de los ejercicios propuestos: notas faltantes y datos no numéricos.}
 % \end{figure}
 
@@ -642,7 +644,7 @@ sucesivamente), las cuales a su vez son abiertas por el objeto
                            5. El objeto calcula su volumen y su superficie. \newline
                            6. El sistema muestra ambos resultados con dos decimales. \\
 \textbf{Flujo alterno A} & En el paso 3, si algún valor no es numérico, el sistema muestra la
-                           alerta \textit{"Ingrese valores numéricos válidos"} y no realiza el
+                           alerta \textit{``Ingrese valores numéricos válidos''} y no realiza el
                            cálculo. El caso de uso termina. \\
 \textbf{Postcondición} & El volumen y la superficie quedan visibles en la ventana. \\
 \bottomrule
@@ -653,26 +655,26 @@ sucesivamente), las cuales a su vez son abiertas por el objeto
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.38\textwidth]{img/figuras_menu.png}
+    \includegraphics[width=0.38\textwidth]{figuras_menu.png}
     \caption{Menú principal con las cinco figuras geométricas disponibles.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.31\textwidth]{img/figura_cilindro.png}
+    \includegraphics[width=0.31\textwidth]{figura_cilindro.png}
     \hspace{0.02\textwidth}
-    \includegraphics[width=0.31\textwidth]{img/figura_esfera.png}
+    \includegraphics[width=0.31\textwidth]{figura_esfera.png}
     \hspace{0.02\textwidth}
-    \includegraphics[width=0.31\textwidth]{img/figura_piramide.png}
+    \includegraphics[width=0.31\textwidth]{figura_piramide.png}
     \caption{Ventanas del cilindro, la esfera y la pirámide, cada una con su imagen
              y sus resultados.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.31\textwidth]{img/figura_cubo.png}
+    \includegraphics[width=0.31\textwidth]{figura_cubo.png}
     \hspace{0.02\textwidth}
-    \includegraphics[width=0.31\textwidth]{img/figura_prisma.png}
+    \includegraphics[width=0.31\textwidth]{figura_prisma.png}
     \caption{Ventanas del cubo y del prisma, figuras agregadas como parte de los
              ejercicios propuestos.}
 \end{figure}
@@ -708,11 +710,11 @@ class Cilindro(FiguraGeometrica):
         self.calcular_superficie()
 
     def calcular_volumen(self):
-        # Fórmula: π * r² * h
+        # Fórmula: pi * r² * h
         self.volumen = math.pi * (self.radio ** 2) * self.altura
 
     def calcular_superficie(self):
-        # Fórmula: 2πrh + 2πr²
+        # Fórmula: 2 * pi * r * h + 2 * pi * r²
         self.superficie = (2 * math.pi * self.radio * self.altura) + (2 * math.pi * (self.radio ** 2))
 
 class Esfera(FiguraGeometrica):
@@ -723,11 +725,11 @@ class Esfera(FiguraGeometrica):
         self.calcular_superficie()
 
     def calcular_volumen(self):
-        # Fórmula: 4/3 * π * r³
+        # Fórmula: 4/3 * pi * r³
         self.volumen = (4.0 / 3.0) * math.pi * (self.radio ** 3)
 
     def calcular_superficie(self):
-        # Fórmula: 4 * π * r²
+        # Fórmula: 4 * pi * r²
         self.superficie = 4.0 * math.pi * (self.radio ** 2)
 
 class Piramide(FiguraGeometrica):
