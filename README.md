@@ -29,6 +29,7 @@ Cada actividad contiene los ejercicios resueltos en Python y un informe en LaTeX
 | [Actividad 1](actividad-01/) | Clases, atributos de instancia, métodos, validación de entradas con excepciones |
 | [Actividad 2](actividad-02/) | Constructores con parámetros, enumeraciones (`Enum`), encapsulamiento con `@property`, varias clases en un mismo módulo |
 | [Actividad 3](actividad-03/) | Herencia, separación entre lógica y vista, interfaces gráficas con Tkinter |
+| [Actividad 4](actividad-04/) | Gestión de excepciones, validación de datos, métodos estáticos, lectura de archivos |
 
 ## Actividad 1 · Clases y métodos
 
@@ -63,13 +64,26 @@ Cada actividad contiene los ejercicios resueltos en Python y un informe en LaTeX
 
 📄 Informe: [`actividad-03/informe.tex`](actividad-03/informe.tex)
 
+## Actividad 4 · Excepciones y lectura de archivos
+
+| Ejercicio | Archivo | Clases | Descripción |
+|---|---|---|---|
+| 4.1 | [`ejercicio1.py`](actividad-04/ejercicio1.py) | `PruebaExcepciones`, `VentanaPrueba` | Muestra en pantalla la salida de dos bloques `try` con sus `except` y `finally`. |
+| 4.2 | [`ejercicio2.py`](actividad-04/ejercicio2.py) | `Vendedor`, `VentanaVendedor` | Verifica la edad del vendedor y lanza una excepción si es menor de 18 o está fuera del rango 0–120. |
+| 4.3 | [`ejercicio3.py`](actividad-04/ejercicio3.py) | `CalculosNumericos`, `VentanaCalculos` | Logaritmo neperiano y raíz cuadrada con métodos estáticos; excepción aritmética si el valor no es positivo. |
+| 4.4 | [`ejercicio4.py`](actividad-04/ejercicio4.py) | `Programador`, `EquipoMaratonProgramacion`, `VentanaEquipo` | Equipo de 2 o 3 programadores que valida que los nombres sean solo texto y no lleguen a 20 caracteres. |
+| 4.5 | [`ejercicio5.py`](actividad-04/ejercicio5.py) | `LeerArchivo`, `VentanaLector` | Lee un archivo de texto y muestra su contenido, gestionando el error cuando no existe. |
+
+📄 Informe: [`actividad-04/informe.tex`](actividad-04/informe.tex)
+
 ## Estructura
 
 ```text
 .
 ├── actividad-01/   Ejercicios 1.4 a 1.17 + informe.tex
 ├── actividad-02/   Ejercicios 2.1 a 2.5 + informe.tex
-└── actividad-03/   Ejercicios 3.1 y 3.2 (Tkinter) + informe.tex
+├── actividad-03/   Ejercicios 3.1 y 3.2 (Tkinter) + informe.tex
+└── actividad-04/   Ejercicios 4.1 a 4.5 (Tkinter) + informe.tex
 ```
 
 ## Cómo ejecutar
@@ -82,13 +96,19 @@ cd UNAL-Programacion-Orientada-a-Objetos
 python3 actividad-01/ejercicio4.py
 ```
 
-Los ejercicios de la Actividad 3 abren una ventana, así que necesitan un entorno gráfico.
+Los ejercicios de las actividades 3 y 4 abren una ventana, así que necesitan un entorno gráfico.
 
 Para compilar un informe (requiere una distribución de LaTeX):
 
 ```bash
 cd actividad-01
 pdflatex informe.tex
+```
+
+También puede compilarse con [Tectonic](https://tectonic-typesetting.github.io/), que descarga por su cuenta los paquetes que necesite:
+
+```bash
+tectonic -X compile informe.tex
 ```
 
 ## Licencia
