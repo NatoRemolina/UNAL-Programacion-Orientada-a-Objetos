@@ -7,7 +7,7 @@ Ejercicios y actividades del curso de Programación Orientada a Objetos en Pytho
 ![LaTeX](https://img.shields.io/badge/Informes-LaTeX-008080?logo=latex&logoColor=white)
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
 
-🇪🇸 Español · 🇬🇧 English (próximamente)
+Castellano · English (próximamente)
 
 ---
 

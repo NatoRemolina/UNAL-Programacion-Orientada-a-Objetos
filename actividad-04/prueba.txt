@@ -1,0 +1,10 @@
+Universidad Nacional de Colombia
+Facultad de Minas
+
+Programación Orientada a Objetos 2026-2
+Actividad 4 - Ejercicio 6.8: lectura de archivos
+
+Este archivo de texto se lee desde el programa usando un flujo
+de datos, y su contenido se muestra en pantalla.
+Si el archivo no existe, el programa captura la excepción
+y avisa al usuario en lugar de terminar con un error.
